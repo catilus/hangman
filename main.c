@@ -7,11 +7,20 @@
 int main(int argc, char *argv[])
 {
 	char secretWord[] = "OLIVE";
-	char userWord[] = "*****";
+	size_t size = sizeof(secretWord) / sizeof(secretWord[0]);
+	char *userWord = malloc(size);
+	
+	
+	for (int i=0; i < (size-1); i++)
+	{
+		userWord[i] = '*';	
+	}
 	
 	printf("\nWelcome to Hangman!\n\n");
 	
 	readWord(secretWord, userWord);
+	
+	free(userWord);
 	
 	return 0;
 }

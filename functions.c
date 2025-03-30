@@ -41,7 +41,7 @@ void readWord(char secretWord[], char userWord[])
 	
 	if (counter < 11)
 	{
-		printf("\nYou solved the mystery word in %d tries.\n", counter);
+		printf("\nYou found the mystery word in %d tries.\n", counter);
 	}
 	else 
 	{
