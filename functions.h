@@ -8,6 +8,6 @@
 
 char getCharacter(); //Ask and retrieve character user input
 void readWord(char secretWord[], char userWord[]);
-//char intializeUserWord(char secretWord[]);
+char *randomWord();
 
 #endif
