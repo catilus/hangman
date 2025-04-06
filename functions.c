@@ -3,6 +3,8 @@
 #include <string.h>
 #include <ctype.h>
 #include "functions.h"
+#define ALPHABET_LEN 26
+#define MAX_TRIES 10
 
 // Function picks a random word from a file that contains names
 char *chooseFromFile()
@@ -50,7 +52,11 @@ char *chooseFromFile()
 			currentLine++;
 		}
 	}
-	char *chosenWord = malloc(sizeof(buffer));
+	char *chosenWord = malloc(strlen(buffer) + 1);
+	if (chosenWord == NULL)
+	{
+		exit(1);
+	}
 	
 	int i = 0;
 	while (buffer[i] != '\n')
@@ -63,20 +69,6 @@ char *chooseFromFile()
 	fclose(fptr);
 	
 	return chosenWord;
-}
-
-// Function picks a random word in an array of words and returns it (or a pointer to the word itself)
-char *chooseRandomWord()
-{
-	char *listOfWords[] = {"ARACHNEA", "BEAR", "COYOTE", "DOLPHIN", "ELEPHANT", "FOX",
-						"GIRAFFE", "HIPPOPOTAMUS", "IBIS", "JAGUARANDI", "KOALA", "LION", "MOOSE",
-						"NAUTILUS", "OSTRICH", "PENGUIN", "QUAIL", "ROOSTER", "SNAKE", "TAMARIND",
-						"URCHIN" "VOLLE", "WAPITI", "XENOPS", "YAK", "ZEBRA"};
-	
-	size_t length = sizeof(listOfWords) / sizeof(listOfWords[0]) + 1;				
-	int randomNumber = rand() % length + 1;
-	
-	return listOfWords[randomNumber];
 }
 
 // Function initializes userWord based on secretWord (ran only once)
@@ -106,18 +98,21 @@ char *initializeUserWord(char secretWord[])
 char getCharacter()
 {
 	char character = 0;
-	printf("Choose a letter [a-z;A-Z]: ");
-	character = getchar();
 	
-	while (getchar() != '\n') ;
+	while (1) {	
+		printf("Choose a letter [a-z;A-Z]: ");
+		character = getchar();
 	
-	if (!isalpha(character))
-	{
+		while (getchar() != '\n') ;
+	
+		if (isalpha(character))
+		{
+			
+			return toupper(character);
+		}
+		
 		printf("Please enter an actual letter...\n");
-		return getCharacter();
 	}
-	
-	return toupper(character);
 }
 
 // Function checks if input letter is in secretWord
@@ -130,11 +125,11 @@ void readWord(char secretWord[], char userWord[])
 	int counter = 0;
 	
 	// Initialize array of letters already tried
-	char lettersTried[26] = {0};
+	char lettersTried[ALPHABET_LEN] = {0};
 	int letterCounter = 0;
 		
 	// Keep prompting for characters until secretWord is found
-	while (strcmp(secretWord, userWord) != 0 && counter < 10)
+	while (strcmp(secretWord, userWord) != 0 && counter < MAX_TRIES)
 	{
 		// Get a letter from user
 		char character = getCharacter();

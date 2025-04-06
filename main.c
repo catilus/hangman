@@ -6,8 +6,12 @@
 #include "functions.h"
 
 int main(int argc, char *argv[])
-{
-	system("clear");
+{	
+	#ifdef _WIN32
+		system("cls");
+	#else
+		system("clear");
+	#endif
 	
 	srand(time(NULL)); // Set seed for random number generator
 	

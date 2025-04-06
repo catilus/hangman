@@ -7,7 +7,6 @@
 #define FUNCTIONS_H
 
 char *chooseFromFile();
-char *chooseRandomWord();
 char *initializeUserWord(char secretWord[]);
 char getCharacter();
 void readWord(char secretWord[], char userWord[]);
