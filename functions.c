@@ -8,7 +8,10 @@
 Difficulty setDifficulty()
 {
 	int difficultyChoice = 0;
+	//while (getchar() != '\n'); // Clear any leftovers in previous input buffers
 	
+	printf("\n"); // Inserts newline before menu selection is displayed
+		
 	while(1) {
 		printf("Select a difficulty level:\n");
 		printf("	[1] Easy -- 20 attempts\n");
@@ -127,7 +130,7 @@ char *initializeUserWord(char secretWord[])
 char getCharacter()
 {
 	char character = 0;
-	while (getchar() != '\n') ; // Clear any leftovers in previous input buffers
+	while (getchar() != '\n'); // Clear any leftovers in previous input buffers
 	
 	while (1) {	
 		printf("Choose a letter [a-z;A-Z]: ");
