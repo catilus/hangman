@@ -5,7 +5,7 @@ Classic Hangman game playable in the command line. The game features:
 - Three difficulty levels
 - Various files of words to choose from
 - Single-player and two-player modes
-- User records
+- Player high scores
 
 ## Installation instructions
 
