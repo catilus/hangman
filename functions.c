@@ -9,21 +9,29 @@ Difficulty setDifficulty()
 {
 	int difficultyChoice = 0;
 	
-	printf("Select a difficulty level:\n");
-	printf("	[1] Easy -- 20 attempts\n");
-	printf("	[2] Medium -- 15 attempts\n");
-	printf("	[3] Hard -- 10 attempts\n");
-	printf("Difficulty level [enter 1, 2 or 3]: ");
-	scanf("%d", &difficultyChoice);
-	
-	switch (difficultyChoice)
-	{
-		case 1: return EASY;
-		case 2: return MEDIUM;
-		case 3: return HARD;
-		default:
-			printf("Invalid choice\n");
-			return setDifficulty();
+	while(1) {
+		printf("Select a difficulty level:\n");
+		printf("	[1] Easy -- 20 attempts\n");
+		printf("	[2] Medium -- 15 attempts\n");
+		printf("	[3] Hard -- 10 attempts\n");
+		printf("Difficulty level [enter 1, 2 or 3]: ");
+		
+		if (scanf("%d", &difficultyChoice) == 1) //Checks if the user inputted a number and acts accordingly
+		{
+			switch (difficultyChoice)
+			{
+				case 1: return EASY;
+				case 2: return MEDIUM;
+				case 3: return HARD;
+				default:
+					printf("Invalid choice\n");
+			}
+		}
+		else
+		{
+			while (getchar() != '\n');  // Clear input buffer
+			printf("Please enter a number...\n");
+		}
 	}
 }
 
