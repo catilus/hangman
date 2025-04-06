@@ -24,13 +24,13 @@ Difficulty setDifficulty()
 				case 2: return MEDIUM;
 				case 3: return HARD;
 				default:
-					printf("Invalid choice\n");
+					printf("\nInvalid choice\n");
 			}
 		}
 		else
 		{
 			while (getchar() != '\n');  // Clear input buffer
-			printf("Please enter a number...\n");
+			printf("\nPlease enter a number...\n");
 		}
 	}
 }
@@ -127,20 +127,23 @@ char *initializeUserWord(char secretWord[])
 char getCharacter()
 {
 	char character = 0;
+	while (getchar() != '\n') ; // Clear any leftovers in previous input buffers
 	
 	while (1) {	
 		printf("Choose a letter [a-z;A-Z]: ");
 		character = getchar();
-	
-		while (getchar() != '\n') ;
+		printf("\n");
 	
 		if (isalpha(character))
 		{
-			
 			return toupper(character);
 		}
+		else
+		{
+			printf("\nPlease enter an actual letter...\n");
+			while (getchar() != '\n') ;
+		}
 		
-		printf("Please enter an actual letter...\n");
 	}
 }
 
@@ -188,14 +191,14 @@ void readWord(char secretWord[], char userWord[], Difficulty numberOfAttempts)
 		
 			if (letterFound != 0)
 			{
-				printf("Guess the word: %s\n\n", userWord);
+				printf("--> Guess the word: %s\n\n", userWord);
 			}
 			else
 			{
 				counter++;
 				printf("\n%c is not in the secret word. \nYou have %d tries left.\n", character, (numberOfAttempts - counter));
 				printf("________________\n\n");
-				printf("%s\n\n", userWord);
+				printf("--> Guess the word: %s\n\n", userWord);
 			}	
 		}
 		else   // if letter has been tried, print a message and continue
