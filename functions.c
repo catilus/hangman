@@ -59,7 +59,6 @@ char getCharacter()
 	return toupper(character);
 }
 
-
 // Function checks if input letter is in secretWord
 void readWord(char secretWord[], char userWord[])
 {	
@@ -68,47 +67,64 @@ void readWord(char secretWord[], char userWord[])
 	
 	// Initialize counter of user tries
 	int counter = 0;
+	
+	// Initialize array of letters already tried
+	char lettersTried[26] = {0};
+	int letterCounter = 0;
 		
 	// Keep prompting for characters until secretWord is found
 	while (strcmp(secretWord, userWord) != 0 && counter < 10)
 	{
+		// Get a letter from user
 		char character = getCharacter();
-		int letterFound = 0;
-		 
-		// Iterates over characters in word
-		for (int i=0; i < length; i++)
+		
+		// See if letter has already been tried
+		if(strchr(lettersTried, character) == NULL) // if letter hasn't been tried, strchr will not return a pointer --> append letter to letterTried[] and keep going
 		{
-			// Check if character is identical to current letter in secretWord
-			if (character == secretWord[i])
+			lettersTried[letterCounter] = character;
+			letterCounter++;
+			
+			int letterFound = 0;
+		 
+			// Iterates over characters in word
+			for (int i=0; i < length; i++)
 			{
-				userWord[i] = character;
-				letterFound = 1;
+				// Check if character is identical to current letter in secretWord
+				if (character == secretWord[i])
+				{
+					userWord[i] = character;
+					letterFound = 1;
+				}
+				else
+				{
+					continue;
+				}
+			}
+		
+			if (letterFound != 0)
+			{
+				printf("%s\n\n", userWord);
 			}
 			else
 			{
-				continue;
-			}
+				counter++;
+				printf("\n%c is not in the secret word. \nYou have %d tries left.\n", character, (10 - counter));
+				printf("________________\n\n");
+				printf("%s\n\n", userWord);
+			}	
 		}
-		
-		if (letterFound != 0)
+		else   // if letter has been tried, print a message and continue
 		{
-			printf("%s\n\n", userWord);
-		}
-		else
-		{
-			counter++;
-			printf("\n%c is not in the secret word. \nYou have %d tries left.\n", character, (10 - counter));
-			printf("________________\n\n");
-			printf("%s\n\n", userWord);
-		}	
+			printf("Letter %c has already been tried.\n\n", character);		
+		}										
 	}
 
 	if (strcmp(secretWord, userWord) == 0)
 	{
-		printf("\nYOU WON!!!\n\n");
+		printf("\nYOU WON in %d TRIES!!!\n\n", counter);
 	}
 	else
 	{
-		printf("The secret word was: %s\n", secretWord);
+		printf("The secret word was: %s\n\n\n", secretWord);
 	}
 }

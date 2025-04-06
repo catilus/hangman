@@ -7,6 +7,8 @@
 
 int main(int argc, char *argv[])
 {
+	system("clear");
+	
 	srand(time(NULL)); // Set seed for random number generator
 	
 	char *secretWord = chooseRandomWord();
