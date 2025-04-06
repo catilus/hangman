@@ -6,8 +6,9 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
-char getCharacter(); //Ask and retrieve character user input
+char *chooseRandomWord();
+char *initializeUserWord(char secretWord[]);
+char getCharacter();
 void readWord(char secretWord[], char userWord[]);
-char *randomWord();
 
 #endif
