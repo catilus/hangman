@@ -4,7 +4,28 @@
 #include <ctype.h>
 #include "functions.h"
 #define ALPHABET_LEN 26
-#define MAX_TRIES 10
+
+Difficulty setDifficulty()
+{
+	int difficultyChoice = 0;
+	
+	printf("Select a difficulty level:\n");
+	printf("	[1] Easy -- 20 attempts\n");
+	printf("	[2] Medium -- 15 attempts\n");
+	printf("	[3] Hard -- 10 attempts\n");
+	printf("Difficulty level [enter 1, 2 or 3]: ");
+	scanf("%d", &difficultyChoice);
+	
+	switch (difficultyChoice)
+	{
+		case 1: return EASY;
+		case 2: return MEDIUM;
+		case 3: return HARD;
+		default:
+			printf("Invalid choice\n");
+			return setDifficulty();
+	}
+}
 
 // Function picks a random word from a file that contains names
 char *chooseFromFile()
@@ -116,8 +137,8 @@ char getCharacter()
 }
 
 // Function checks if input letter is in secretWord
-void readWord(char secretWord[], char userWord[])
-{	
+void readWord(char secretWord[], char userWord[], Difficulty numberOfAttempts)
+{		
 	// Calculate length of secret word
 	size_t length = strlen(secretWord);
 	
@@ -129,7 +150,7 @@ void readWord(char secretWord[], char userWord[])
 	int letterCounter = 0;
 		
 	// Keep prompting for characters until secretWord is found
-	while (strcmp(secretWord, userWord) != 0 && counter < MAX_TRIES)
+	while (strcmp(secretWord, userWord) != 0 && counter < numberOfAttempts)
 	{
 		// Get a letter from user
 		char character = getCharacter();
@@ -164,7 +185,7 @@ void readWord(char secretWord[], char userWord[])
 			else
 			{
 				counter++;
-				printf("\n%c is not in the secret word. \nYou have %d tries left.\n", character, (10 - counter));
+				printf("\n%c is not in the secret word. \nYou have %d tries left.\n", character, (numberOfAttempts - counter));
 				printf("________________\n\n");
 				printf("%s\n\n", userWord);
 			}	

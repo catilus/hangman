@@ -20,10 +20,12 @@ int main(int argc, char *argv[])
 	char *userWord = initializeUserWord(secretWord);
 	
 	// Main screen instructions 
-	printf("\nWelcome to Hangman!\n\n");
-	printf("Guess the following word: %s\n\n", userWord);
+	printf("\nWelcome to Hangman!\n\n");	
 	
-	readWord(secretWord, userWord);
+	Difficulty numberOfAttempts = setDifficulty();
+	printf("\nGuess the following word in %d attempts: %s\n\n", numberOfAttempts , userWord);
+	
+	readWord(secretWord, userWord, numberOfAttempts);
 	
 	// Freeing dynamically allocated memory
 	free(userWord);
