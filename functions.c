@@ -4,6 +4,67 @@
 #include <ctype.h>
 #include "functions.h"
 
+// Function picks a random word from a file that contains names
+char *chooseFromFile()
+{
+	// Open text file and count lines
+	FILE *fptr = fopen("animals.txt", "r");
+	
+	if(fptr == NULL)
+	{
+		printf("File did not open\n");
+		exit(1);
+	}
+	
+	char buffer[100];
+	int wordCounter = 0;
+	
+	while(fgets(buffer, sizeof(buffer), fptr))
+	{
+		wordCounter++;
+	}
+	
+	if(wordCounter == 0)
+	{
+		fclose(fptr);
+		return NULL;
+	}
+	
+	// Generate a random line number
+	int randomLine = rand() % wordCounter + 1;
+	
+	// Scroll through file until we reach the line we picked	
+	rewind(fptr);
+	int currentLine = 1;
+	
+	//char chosenWord = malloc(
+	
+	while(fgets(buffer, sizeof(buffer), fptr))
+	{
+		if (currentLine == randomLine)
+		{
+			break;
+		}
+		else
+		{
+			currentLine++;
+		}
+	}
+	char *chosenWord = malloc(sizeof(buffer));
+	
+	int i = 0;
+	while (buffer[i] != '\n')
+	{
+		chosenWord[i] = buffer[i];
+		i++;
+	}
+	chosenWord[i] = '\0';
+	
+	fclose(fptr);
+	
+	return chosenWord;
+}
+
 // Function picks a random word in an array of words and returns it (or a pointer to the word itself)
 char *chooseRandomWord()
 {
@@ -103,7 +164,7 @@ void readWord(char secretWord[], char userWord[])
 		
 			if (letterFound != 0)
 			{
-				printf("%s\n\n", userWord);
+				printf("Guess the word: %s\n\n", userWord);
 			}
 			else
 			{
@@ -121,7 +182,7 @@ void readWord(char secretWord[], char userWord[])
 
 	if (strcmp(secretWord, userWord) == 0)
 	{
-		printf("\nYOU WON in %d TRIES!!!\n\n", counter);
+		printf("\nYOU WON!!!\n\n");
 	}
 	else
 	{

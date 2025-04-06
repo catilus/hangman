@@ -6,6 +6,7 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
+char *chooseFromFile();
 char *chooseRandomWord();
 char *initializeUserWord(char secretWord[]);
 char getCharacter();

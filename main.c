@@ -11,8 +11,8 @@ int main(int argc, char *argv[])
 	
 	srand(time(NULL)); // Set seed for random number generator
 	
-	char *secretWord = chooseRandomWord();
-	
+	//char *secretWord = chooseRandomWord();
+	char *secretWord = chooseFromFile();
 	char *userWord = initializeUserWord(secretWord);
 	
 	// Main screen instructions 
@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
 	
 	// Freeing dynamically allocated memory
 	free(userWord);
+	free(secretWord);
 	
 	return 0;
 }
