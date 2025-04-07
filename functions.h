@@ -6,6 +6,7 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
+void screenClear();
 // Structure containing difficulty levels
 typedef enum
 {

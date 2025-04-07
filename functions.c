@@ -5,11 +5,19 @@
 #include "functions.h"
 #define ALPHABET_LEN 26
 
+void screenClear()
+{
+	#ifdef _WIN32
+		system("cls");
+	#else
+		system("clear");
+	#endif
+}
+
 // Function sets game difficulty base on user input
 Difficulty setDifficulty()
 {
 	int difficultyChoice = 0;
-	//while (getchar() != '\n'); // Clear any leftovers in previous input buffers
 	
 	printf("\n"); // Inserts newline before menu selection is displayed
 		
@@ -42,8 +50,41 @@ Difficulty setDifficulty()
 // Function picks a random word from a file that contains names
 char *chooseFromFile()
 {
+	int fileChoice = 0;
+	char fileChosen[100] = {0};
+	
+	// Menu to choose from multiple file lists
+	while (1)
+	{
+		printf("Please choose amongst the following lists of names:\n");
+		printf("	[1] Animals\n");
+		printf("	[2] Plants\n");
+		printf("File number [enter 1 or 2]: ");
+		if (scanf("%d", &fileChoice) == 1) 
+		{
+			switch (fileChoice)
+			{
+				case 1: 
+					strcpy(fileChosen, "Lists//animals.txt");
+					break;
+				case 2: 
+					strcpy(fileChosen, "Lists//plants.txt");
+					break;
+				default: 
+					printf("\nInvalid choice\n");
+					continue;
+			}
+			break;
+		}
+		else
+		{
+			while (getchar() != '\n');  // Clear input buffer
+			printf("Please enter a number\n");
+		}
+	}
+	
 	// Open text file and count lines
-	FILE *fptr = fopen("animals.txt", "r");
+	FILE *fptr = fopen(fileChosen, "r");
 	
 	if(fptr == NULL)
 	{

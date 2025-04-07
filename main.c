@@ -7,17 +7,11 @@
 
 int main(int argc, char *argv[])
 {	
-	#ifdef _WIN32
-		system("cls");
-	#else
-		system("clear");
-	#endif
+	screenClear(); // Clears screen
 	
 	srand(time(NULL)); // Set seed for random number generator
 	
 	//char *secretWord = chooseRandomWord();
-	char *secretWord = chooseFromFile();
-	char *userWord = initializeUserWord(secretWord);
 	
 	// Initialization of variables; memory allocation
 	char buffer[30] = {0};
@@ -44,8 +38,13 @@ int main(int argc, char *argv[])
 
 	// Sets difficulty level based on user input
 	Difficulty numberOfAttempts = setDifficulty();
-	printf("\n________________\n\n");
-	printf("Guess the following word in %d attempts: %s\n\n", numberOfAttempts , userWord);
+	
+	// Choose file list of names
+	char *secretWord = chooseFromFile();
+	char *userWord = initializeUserWord(secretWord);
+	
+	//screenClear();
+	printf("\nGuess the following word in %d attempts: %s\n\n", numberOfAttempts , userWord);
 
 	// Word handling
 	if (readWord(secretWord, userWord, numberOfAttempts) == 1) // If user wins, increment streak by 1
@@ -59,7 +58,6 @@ int main(int argc, char *argv[])
 	
 	// File contains high scores
 	streak = highScores(streak, userName);
-	
 	printf("%s, your streak is now: %d\n", userName, streak);
 	
 	// Freeing dynamically allocated memory
