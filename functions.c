@@ -5,6 +5,7 @@
 #include "functions.h"
 #define ALPHABET_LEN 26
 
+// Function sets game difficulty base on user input
 Difficulty setDifficulty()
 {
 	int difficultyChoice = 0;
@@ -151,12 +152,12 @@ char getCharacter()
 }
 
 // Function checks if input letter is in secretWord
-void readWord(char secretWord[], char userWord[], Difficulty numberOfAttempts)
+int readWord(char secretWord[], char userWord[], Difficulty numberOfAttempts)
 {		
 	// Calculate length of secret word
 	size_t length = strlen(secretWord);
 	
-	// Initialize counter of user tries
+	// Initialize counter of user attempts
 	int counter = 0;
 	
 	// Initialize array of letters already tried
@@ -213,9 +214,85 @@ void readWord(char secretWord[], char userWord[], Difficulty numberOfAttempts)
 	if (strcmp(secretWord, userWord) == 0)
 	{
 		printf("\nYOU WON!!!\n\n");
+		return 1;
 	}
 	else
 	{
 		printf("The secret word was: %s\n\n\n", secretWord);
+		return 0;
 	}
+}
+
+// Function handles record keeping of user streaks in external file
+int highScores(int streak, char userName[])
+{
+	// Open two files - create files if they does not exist
+	FILE *scores = fopen("scores.txt", "r");
+	if (scores == NULL)
+	{
+		printf("File did not open\n");
+		exit(1);
+	}
+	
+	FILE *tempScores = fopen("temp_scores.txt", "a");
+	if (scores == NULL)
+	{
+		printf("File did not open\n");
+		exit(1);
+	}
+	
+	// Read through the file, line by line, looking for username
+	char buffer[100]; // Initialize buffer
+	
+	if (fgets(buffer, sizeof(buffer), scores) == NULL) // Check if file is empty
+	{
+		printf("File is empty, adding new player score");
+		fprintf(tempScores, "%s: %d\n", userName, streak); // If empty, write username and score in temporary file
+	}
+	else
+	{	
+		rewind(scores); // Go back to beginning of original file
+		
+		while (fgets(buffer, sizeof(buffer), scores) != NULL) // Loop over file, one line at a time
+		{	
+			if (strstr(buffer, userName) != NULL) // If username is found in file
+			{
+				// Find score in the string
+				int score = 0;
+				sscanf(buffer, "%*[^:]: %d", &score);
+				
+				if (streak == 0)
+				{
+					streak = 0;
+				}
+				else
+				{
+					streak += score;
+				}
+				
+				// Rewrite line in temp file
+				fprintf(tempScores, "%s: %d\n", userName, streak);
+			}
+			else  // If username is not found in file 
+			{
+				fprintf(tempScores, buffer);
+			}
+		}
+	}
+	
+	while (getchar() != '\n');  // Clear buffer
+	
+	fclose(scores);
+	fclose(tempScores);
+	
+	// Delete scores and rename tempScores to scores
+	remove("scores.txt");
+	
+	if (rename("temp_scores.txt", "scores.txt") != 0)
+	{
+		perror("Rename failed");
+		exit(1);
+	}
+	
+	return streak;
 }

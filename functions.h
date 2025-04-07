@@ -18,6 +18,7 @@ Difficulty setDifficulty();
 char *chooseFromFile();
 char *initializeUserWord(char secretWord[]);
 char getCharacter();
-void readWord(char secretWord[], char userWord[], Difficulty numberOfAttempts);
+int readWord(char secretWord[], char userWord[], Difficulty numberOfAttempts);
+int highScores(int streak, char username[]);
 
 #endif
