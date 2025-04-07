@@ -6,12 +6,9 @@ Classic Hangman game playable in the command line. The game features:
     - Easy: 20 attempts
     - Medium: 15 attempts
     - Hard: 10 attempts 
-- Various files of words to choose from:
-So far we have animals and plants.
-- Single-player and two-player modes:
-Two-player modes has the option to pick the word themselves or randomly pick the word from one of many lists of words (see above).
-- Player high scores
-Players can enter their username and keep track of their winning streak.
+- Single-player and two-player modes: two-player mode can either pick the secret word or randomly pick the secret word from one of many lists of words (see below).
+- Various files of words to choose from: animals and plants.
+- Player high scores: players can register their username to store their winning streak game after game.
 
 ## Installation instructions
 
